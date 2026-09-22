@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Para Thaly ♡</title>
+
+<style>
+/* =========================================================
+   CONFIGURACIÓN GENERAL
+========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    font-family: Georgia, "Times New Roman", serif;
+    background: #050b07;
+    color: white;
+}
+
+/* =========================================================
+   ESCENA PRINCIPAL
+========================================================= */
+
+.scene {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    background:
+        radial-gradient(
+            circle at 80% 25%,
+            rgba(255, 214, 112, 0.25),
+            transparent 45%
+        ),
+        linear-gradient(
+            to bottom,
+            #111328 0%,
+            #233056 25%,
+            #bd6344 52%,
+            #58652f 75%,
+            #0f210d 100%
+        );
+}
+
+/* =========================================================
+   NUBES DE ATARDECER
+========================================================= */
+
+.clouds-container {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.cloud {
+    position: absolute;
+    background: linear-gradient(to bottom, rgba(255, 180, 150, 0.35), rgba(200, 110, 130, 0.15));
+    border-radius: 100px;
+    filter: blur(12px);
+    opacity: 0.8;
+}
+
+.cloud::before, .cloud::after {
+    content: '';
+    position: absolute;
+    background: inherit;
+    border-radius: 50%;
+}
+
+/* Nube 1 */
+.cloud1 {
+    top: 10%;
+    left: -10%;
+    width: 320px;
+    height: 90px;
+    animation: moveCloud1 45s linear infinite;
+}
+.cloud1::before { width: 140px; height: 140px; top: -60px; left: 50px; }
+.cloud1::after { width: 110px; height: 110px; top: -40px; right: 40px; }
+
+/* Nube 2 */
+.cloud2 {
+    top: 20%;
+    right: -15%;
+    width: 400px;
+    height: 110px;
+    animation: moveCloud2 55s linear infinite;
+}
+.cloud2::before { width: 170px; height: 170px; top: -80px; left: 70px; }
+.cloud2::after { width: 130px; height: 130px; top: -50px; right: 60px; }
+
+/* Nube 3 */
+.cloud3 {
+    top: 30%;
+    left: 20%;
+    width: 280px;
+    height: 75px;
+    opacity: 0.6;
+    animation: moveCloud1 65s linear infinite reverse;
+}
+.cloud3::before { width: 110px; height: 110px; top: -45px; left: 35px; }
+.cloud3::after { width: 85px; height: 85px; top: -35px; right: 35px; }
+
+@keyframes moveCloud1 {
+    0% { transform: translateX(-100px); }
+    50% { transform: translateX(calc(100vw + 100px)); }
+    100% { transform: translateX(-100px); }
+}
+
+@keyframes moveCloud2 {
+    0% { transform: translateX(100px); }
+    50% { transform: translateX(calc(-100vw - 100px)); }
+    100% { transform: translateX(100px); }
+}
+
+/* =========================================================
+   LUZ DEL HORIZONTE
+========================================================= */
+
+.horizon {
+    position: absolute;
+    left: 50%;
+    bottom: 15%;
+    width: 120%;
+    height: 40%;
+    transform: translateX(-50%);
+    pointer-events: none;
+    background:
+        radial-gradient(
+            ellipse at center,
+            rgba(255, 222, 130, 0.38),
+            rgba(255, 170, 60, 0.12) 42%,
+            transparent 75%
+        );
+}
+
+.light-burst {
+    position: absolute;
+    z-index: 100;
+    inset: 0;
+    pointer-events: none;
+    background:
+        radial-gradient(
+            circle at 80% 20%,
+            rgba(255, 248, 207, 0.95),
+            rgba(255, 215, 100, 0.45) 30%,
+            transparent 70%
+        );
+    opacity: 0;
+}
+
+.garden.show .light-burst {
+    animation: lightBurst 1.8s ease forwards;
+}
+
+@keyframes lightBurst {
+    0% { opacity: 0; }
+    25% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+/* =========================================================
+   ESTRELLAS
+========================================================= */
+
+.stars {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.star {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: #fff8d0;
+    box-shadow: 0 0 7px rgba(255, 244, 180, .9);
+    animation: twinkle 3s ease-in-out infinite;
+}
+
+.star:nth-child(1) { top: 8%; left: 10%; animation-delay: .2s; }
+.star:nth-child(2) { top: 15%; left: 22%; animation-delay: 1s; }
+.star:nth-child(3) { top: 6%; left: 38%; animation-delay: 2s; }
+.star:nth-child(4) { top: 20%; left: 50%; animation-delay: .4s; }
+.star:nth-child(5) { top: 10%; left: 62%; animation-delay: 1.5s; }
+.star:nth-child(6) { top: 28%; left: 14%; animation-delay: 1.2s; }
+.star:nth-child(7) { top: 32%; left: 30%; animation-delay: 2.1s; }
+.star:nth-child(8) { top: 35%; left: 55%; animation-delay: .3s; }
+
+@keyframes twinkle {
+    0%, 100% { opacity: .2; transform: scale(.6); }
+    50% { opacity: 1; transform: scale(1.5); }
+}
+
+/* =========================================================
+   SOL RESPLANDECIENTE (LADO DERECHO)
+========================================================= */
+
+.sun-container {
+    position: absolute;
+    top: 6%;
+    right: 7%;
+    width: 140px;
+    height: 140px;
+    z-index: 10;
+    pointer-events: none;
+    opacity: 0;
+    transform: scale(.4);
+}
+
+.garden.show .sun-container {
+    animation: sunAppear 2s cubic-bezier(.2,.8,.2,1) .2s forwards;
+}
+
+.sun-core {
+    position: absolute;
+    inset: 20px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #ffffff, #ffe785 40%, #ffa826 85%);
+    box-shadow:
+        0 0 35px #ffe073,
+        0 0 75px #ff9e29,
+        0 0 140px rgba(255, 150, 0, 0.6);
+    animation: sunPulse 4s ease-in-out infinite alternate;
+}
+
+.sun-rays {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: repeating-conic-gradient(
+        from 0deg,
+        rgba(255, 230, 120, 0.4) 0deg 8deg,
+        transparent 8deg 22deg
+    );
+    mask-image: radial-gradient(circle, transparent 40%, black 50% 70%, transparent 72%);
+    -webkit-mask-image: radial-gradient(circle, transparent 40%, black 50% 70%, transparent 72%);
+    animation: rotateRays 30s linear infinite;
+}
+
+@keyframes sunAppear {
+    0% { opacity: 0; transform: scale(.3) translateY(30px); }
+    70% { opacity: 1; transform: scale(1.1); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes sunPulse {
+    0% { transform: scale(0.97); filter: brightness(1); }
+    100% { transform: scale(1.03); filter: brightness(1.2); }
+}
+
+@keyframes rotateRays {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* =========================================================
+   PANTALLA INICIAL
+========================================================= */
+
+.intro {
+    position: relative;
+    z-index: 200;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 25px;
+    transition: opacity .9s ease, transform .9s ease, visibility .9s ease;
+}
+
+.intro.hidden {
+    opacity: 0;
+    transform: scale(1.08) translateY(-10px);
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.card {
+    position: relative;
+    width: min(92%, 460px);
+    padding: 50px 34px;
+    text-align: center;
+    border-radius: 34px;
+    background: linear-gradient(145deg, rgba(255,255,255,.17), rgba(255,255,255,.055));
+    border: 1px solid rgba(255,255,255,.25);
+    box-shadow: 0 25px 80px rgba(0,0,0,.45), inset 0 1px rgba(255,255,255,.18);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    animation: cardFloat 5s ease-in-out infinite;
+}
+
+@keyframes cardFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-7px); }
+}
+
+.small-text {
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #ffe99a;
+    margin-bottom: 20px;
+}
+
+.card h1 {
+    font-size: clamp(45px, 13vw, 68px);
+    font-weight: normal;
+    color: #fff6c5;
+    margin-bottom: 22px;
+    text-shadow: 0 0 18px rgba(255,222,107,.25);
+}
+
+.card p {
+    font-size: 17px;
+    line-height: 1.8;
+    color: rgba(255,255,255,.9);
+    margin-bottom: 32px;
+}
+
+.open {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 170px;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 50px;
+    background: linear-gradient(135deg, #ffe987, #f5c744);
+    color: #3c2d08;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 17px;
+    cursor: pointer;
+    box-shadow: 0 8px 30px rgba(246,203,68,.25);
+    transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.open:hover {
+    transform: translateY(-4px) scale(1.03);
+    box-shadow: 0 15px 40px rgba(246,203,68,.38);
+}
+
+/* =========================================================
+   JARDÍN Y MENSAJE
+========================================================= */
+
+.garden {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 1.4s ease, visibility 1.4s ease;
+}
+
+.garden.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.message {
+    position: absolute;
+    z-index: 50;
+    top: 6%;
+    left: 50%;
+    width: 90%;
+    max-width: 650px;
+    transform: translateX(-50%) translateY(30px);
+    text-align: center;
+    color: #fff5bd;
+    opacity: 0;
+}
+
+.garden.show .message {
+    animation: messageIn 1.5s ease 3.1s forwards;
+}
+
+.message h2 {
+    font-size: clamp(31px, 8vw, 52px);
+    font-weight: normal;
+    margin-bottom: 12px;
+    text-shadow: 0 0 20px rgba(255,222,104,.3);
+}
+
+.message p {
+    font-size: clamp(14px, 3.8vw, 18px);
+    line-height: 1.6;
+    color: rgba(255,255,255,.92);
+}
+
+.message p.highlight {
+    margin-top: 10px;
+    color: #ffe89e;
+    font-style: italic;
+    font-size: clamp(15px, 4vw, 19px);
+    text-shadow: 0 0 12px rgba(255, 232, 158, 0.4);
+}
+
+@keyframes messageIn {
+    from { opacity: 0; transform: translateX(-50%) translateY(30px); }
+    to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+/* =========================================================
+   PASTO Y SUELO
+========================================================= */
+
+.ground-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 35%;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.hill {
+    position: absolute;
+    bottom: -15%;
+    left: -10%;
+    width: 120%;
+    height: 100%;
+    background: radial-gradient(ellipse at center, #24461a 0%, #132a10 60%, #081206 100%);
+    border-radius: 50% 50% 0 0;
+}
+
+.grass-blades {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.blade {
+    position: absolute;
+    bottom: 0;
+    width: 10px;
+    height: 80px;
+    background: linear-gradient(to top, #0f260b, #4e822d, #8bbd48);
+    border-radius: 100% 100% 0 0;
+    transform-origin: bottom center;
+}
+
+.blade:nth-child(1) { left: 5%; height: 95px; transform: rotate(-8deg); animation: windBlade 4s ease-in-out infinite; }
+.blade:nth-child(2) { left: 12%; height: 110px; transform: rotate(5deg); animation: windBlade 3.5s ease-in-out infinite 0.5s; }
+.blade:nth-child(3) { left: 18%; height: 85px; transform: rotate(-12deg); animation: windBlade 4.2s ease-in-out infinite 1s; }
+.blade:nth-child(4) { left: 27%; height: 120px; transform: rotate(8deg); animation: windBlade 3.8s ease-in-out infinite 0.2s; }
+.blade:nth-child(5) { left: 35%; height: 90px; transform: rotate(-5deg); animation: windBlade 4.5s ease-in-out infinite 1.2s; }
+.blade:nth-child(6) { left: 43%; height: 115px; transform: rotate(10deg); animation: windBlade 3.9s ease-in-out infinite 0.7s; }
+.blade:nth-child(7) { left: 52%; height: 95px; transform: rotate(-10deg); animation: windBlade 4.1s ease-in-out infinite 0.3s; }
+.blade:nth-child(8) { left: 61%; height: 125px; transform: rotate(6deg); animation: windBlade 3.6s ease-in-out infinite 0.9s; }
+.blade:nth-child(9) { left: 70%; height: 85px; transform: rotate(-7deg); animation: windBlade 4.3s ease-in-out infinite 0.4s; }
+.blade:nth-child(10) { left: 78%; height: 105px; transform: rotate(12deg); animation: windBlade 3.7s ease-in-out infinite 1.1s; }
+.blade:nth-child(11) { left: 86%; height: 90px; transform: rotate(-4deg); animation: windBlade 4.4s ease-in-out infinite 0.6s; }
+.blade:nth-child(12) { left: 93%; height: 115px; transform: rotate(9deg); animation: windBlade 3.8s ease-in-out infinite 0.8s; }
+
+@keyframes windBlade {
+    0%, 100% { transform: rotate(var(--rot, 0deg)); }
+    50% { transform: rotate(calc(var(--rot, 0deg) + 7deg)); }
+}
+
+/* =========================================================
+   GIRASOLES
+========================================================= */
+
+.sunflower {
+    position: absolute;
+    bottom: 12%;
+    width: 150px;
+    height: 310px;
+    transform-origin: bottom center;
+    opacity: 0;
+    z-index: 15;
+}
+
+.sf-left { left: 5%; }
+.sf-center { left: 50%; bottom: 6%; transform: translateX(-50%) scale(1.08); }
+.sf-right { right: 4%; }
+
+.garden.show .sf-left {
+    animation: flowerAppear 1.5s 1.0s cubic-bezier(.2,.8,.2,1) forwards, swaySide 5s 2.6s ease-in-out infinite;
+}
+.garden.show .sf-center {
+    animation: flowerAppearCenter 1.5s 1.35s cubic-bezier(.2,.8,.2,1) forwards, swayCenter 5s 2.9s ease-in-out infinite;
+}
+.garden.show .sf-right {
+    animation: flowerAppear 1.5s 1.7s cubic-bezier(.2,.8,.2,1) forwards, swaySide 5s 3.2s ease-in-out infinite;
+}
+
+@keyframes flowerAppear {
+    0% { opacity: 0; transform: translateY(80px) scale(.45); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes flowerAppearCenter {
+    0% { opacity: 0; transform: translateX(-50%) translateY(80px) scale(.45); }
+    100% { opacity: 1; transform: translateX(-50%) translateY(0) scale(1.08); }
+}
+
+@keyframes swaySide {
+    0%, 100% { transform: translateY(0) scale(1) rotate(0deg); }
+    50% { transform: translateY(0) scale(1) rotate(2deg); }
+}
+
+@keyframes swayCenter {
+    0%, 100% { transform: translateX(-50%) scale(1.08) rotate(0deg); }
+    50% { transform: translateX(-50%) scale(1.08) rotate(2deg); }
+}
+
+.stem {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 10px;
+    height: 220px;
+    transform: translateX(-50%);
+    border-radius: 10px;
+    background: linear-gradient(to right, #294c1c, #638b36, #31551f);
+}
+
+.leaf {
+    position: absolute;
+    width: 72px;
+    height: 32px;
+    background: linear-gradient(135deg, #64983b, #315f25);
+    border-radius: 100% 0 100% 0;
+}
+
+.leaf.left { bottom: 98px; left: 12px; transform: rotate(25deg); }
+.leaf.right { bottom: 140px; right: 5px; transform: scaleX(-1) rotate(25deg); }
+
+.flower {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 140px;
+    height: 140px;
+    transform: translateX(-50%);
+}
+
+.petals { position: absolute; inset: 0; }
+
+.petal {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 44px;
+    height: 74px;
+    transform-origin: 50% 90%;
+    border-radius: 50% 50% 45% 45%;
+    background: linear-gradient(to bottom, #fff071, #f6c52e 60%, #d99a13);
+    box-shadow: inset 0 -5px 7px rgba(139,88,0,.18);
+}
+
+.petal:nth-child(1) { transform: translate(-50%,-90%) rotate(0deg); }
+.petal:nth-child(2) { transform: translate(-50%,-90%) rotate(30deg); }
+.petal:nth-child(3) { transform: translate(-50%,-90%) rotate(60deg); }
+.petal:nth-child(4) { transform: translate(-50%,-90%) rotate(90deg); }
+.petal:nth-child(5) { transform: translate(-50%,-90%) rotate(120deg); }
+.petal:nth-child(6) { transform: translate(-50%,-90%) rotate(150deg); }
+.petal:nth-child(7) { transform: translate(-50%,-90%) rotate(180deg); }
+.petal:nth-child(8) { transform: translate(-50%,-90%) rotate(210deg); }
+.petal:nth-child(9) { transform: translate(-50%,-90%) rotate(240deg); }
+.petal:nth-child(10) { transform: translate(-50%,-90%) rotate(270deg); }
+.petal:nth-child(11) { transform: translate(-50%,-90%) rotate(300deg); }
+.petal:nth-child(12) { transform: translate(-50%,-90%) rotate(330deg); }
+
+.center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 57px;
+    height: 57px;
+    transform: translate(-50%,-50%);
+    border-radius: 50%;
+    background: radial-gradient(circle, #70451c 0%, #39220e 72%);
+    box-shadow: inset 0 0 0 5px rgba(31,18,5,.45), 0 0 15px rgba(0,0,0,.35);
+}
+
+/* =========================================================
+   CORAZONES FLOTANTES
+========================================================= */
+
+.hearts-container {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 25;
+}
+
+.heart {
+    position: absolute;
+    bottom: -10%;
+    color: #ffda73;
+    font-size: 24px;
+    opacity: 0;
+    filter: drop-shadow(0 0 8px rgba(255, 218, 115, 0.8));
+}
+
+.garden.show .heart {
+    animation: flyAndSway 7s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.heart:nth-child(1) { left: 12%; animation-delay: 2.2s !important; font-size: 18px; }
+.heart:nth-child(2) { left: 28%; animation-delay: 4.5s !important; font-size: 28px; color: #ffe699; }
+.heart:nth-child(3) { left: 45%; animation-delay: 3.1s !important; font-size: 22px; }
+.heart:nth-child(4) { left: 63%; animation-delay: 5.8s !important; font-size: 32px; color: #ffd15c; }
+.heart:nth-child(5) { left: 78%; animation-delay: 2.7s !important; font-size: 20px; }
+.heart:nth-child(6) { left: 90%; animation-delay: 4.0s !important; font-size: 25px; }
+
+@keyframes flyAndSway {
+    0% {
+        transform: translateY(0) translateX(0) scale(0.5) rotate(0deg);
+        opacity: 0;
+    }
+    15% { opacity: 0.9; }
+    50% { transform: translateY(-50vh) translateX(25px) scale(1.1) rotate(15deg); }
+    85% { opacity: 0.8; }
+    100% {
+        transform: translateY(-105vh) translateX(-20px) scale(1.3) rotate(-10deg);
+        opacity: 0;
+    }
+}
+
+/* =========================================================
+   DISEÑO ADAPTATIVO (MÓVILES)
+========================================================= */
+
+@media (max-width: 600px) {
+    .sun-container { top: 4%; right: 4%; width: 95px; height: 95px; }
+    .card { padding: 40px 23px; }
+    .card h1 { font-size: 48px; }
+    .message { top: 8%; width: 88%; }
+    .message h2 { font-size: 30px; }
+    .sunflower { bottom: 10%; }
+    .sf-left { left: -30px; }
+    .sf-center { left: 50%; bottom: 6%; transform: translateX(-50%) scale(.7); }
+    .sf-right { right: -30px; }
+
+    @keyframes flowerAppearCenter {
+        0% { opacity: 0; transform: translateX(-50%) translateY(80px) scale(.35); }
+        100% { opacity: 1; transform: translateX(-50%) translateY(0) scale(.7); }
+    }
+
+    @keyframes swayCenter {
+        0%, 100% { transform: translateX(-50%) scale(.7) rotate(0deg); }
+        50% { transform: translateX(-50%) scale(.7) rotate(2deg); }
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="scene">
+
+    <!-- REPRODUCTOR DE AUDIO CORREGIDO -->
+    <audio id="bgMusic" loop preload="auto">
+        <source src="cancion.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- ESTRELLAS -->
+    <div class="stars">
+        <span class="star"></span><span class="star"></span>
+        <span class="star"></span><span class="star"></span>
+        <span class="star"></span><span class="star"></span>
+        <span class="star"></span><span class="star"></span>
+    </div>
+
+    <!-- PANTALLA INICIAL -->
+    <section class="intro" id="intro">
+        <div class="card">
+            <div class="small-text">un pequeño detalle para</div>
+            <h1>Mi Chanis ♡</h1>
+            <p>
+                Fue hecho con mucha paciencia pero muuucha paciencia y va con muuuchooo cariño para ti... de yo para tú
+                <br>
+                Espero que te guste :)
+            </p>
+            <button type="button" class="open" id="openButton">
+                Abrir ♡
+            </button>
+        </div>
+    </section>
+
+    <!-- JARDÍN -->
+    <section class="garden" id="garden">
+        <!-- NUBES DE ATARDECER -->
+        <div class="clouds-container">
+            <div class="cloud cloud1"></div>
+            <div class="cloud cloud2"></div>
+            <div class="cloud cloud3"></div>
+        </div>
+
+        <!-- SOL RESPLANDECIENTE -->
+        <div class="sun-container">
+            <div class="sun-rays"></div>
+            <div class="sun-core"></div>
+        </div>
+
+        <div class="horizon"></div>
+        <div class="light-burst"></div>
+
+        <div class="message">
+            <h2>Para Mi Chancla ♡</h2>
+            <p>Amo chanis, gracias por simore estar para mi.</p>
+            <p class="highlight">Eres la mejor hermana del mundo mundial.</p>
+            <p style="margin-top: 10px;">Que estas flores te recuerden lo mucho que te amo. TE AMO SIX SEVEN MILLONES</p>
+        </div>
+
+        <!-- PASTO Y SUELO -->
+        <div class="ground-container">
+            <div class="hill"></div>
+            <div class="grass-blades">
+                <div class="blade" style="--rot: -8deg;"></div>
+                <div class="blade" style="--rot: 5deg;"></div>
+                <div class="blade" style="--rot: -12deg;"></div>
+                <div class="blade" style="--rot: 8deg;"></div>
+                <div class="blade" style="--rot: -5deg;"></div>
+                <div class="blade" style="--rot: 10deg;"></div>
+                <div class="blade" style="--rot: -10deg;"></div>
+                <div class="blade" style="--rot: 6deg;"></div>
+                <div class="blade" style="--rot: -7deg;"></div>
+                <div class="blade" style="--rot: 12deg;"></div>
+                <div class="blade" style="--rot: -4deg;"></div>
+                <div class="blade" style="--rot: 9deg;"></div>
+            </div>
+        </div>
+
+        <!-- GIRASOLES -->
+        <div class="sunflower sf-left">
+            <div class="stem"></div>
+            <div class="leaf left"></div>
+            <div class="leaf right"></div>
+            <div class="flower">
+                <div class="petals">
+                    <span class="petal"></span><span class="petal"></span><span class="petal"></span>
+                    <span class="petal"></span><span class="petal"></span><span class="petal"></span>
+                    <span class="petal"></span><span class="petal"></span><span class="petal"></span>
+                    <span class="petal"></span><span class="petal"></span><span class="petal"></span>
+                </div>
+                <div class="center"></div>
+            </div>
+        </div>
+
+        <div class="sunflower sf-center">
+            <div class="stem"></div>
+            <div class="leaf left"></div>
+            <div class="leaf right"></div>
+            <div class="flower">
+                <div class="petals">
+                    <span class="petal"></span><span class="petal"></span><span class="petal"></span>
+                    <span class="petal"></span><span class="petal"></span><span class="petal"></span>
+                    <span class="petal"></span><span class="petal"></span><span class="petal"></span>
+                    <span class="petal"></span><span class="petal"></span><span class="petal"></span>
+                </div>
+                <div class="center"></div>
+            </div>
+        </div>
+
+        <div class="sunflower sf-right">
+            <div class="stem"></div>
+            <div class="leaf left"></div>
+            <div class="leaf right"></div>
+            <div class="flower">
+                <div class="petals">
+                    <span class="petal"></span><span class="petal"></span><span class="petal"></span>
+                    <span class="petal"></span><span class="petal"></span><span class="petal"></span>
+                    <span class="petal"></span><span class="petal"></span><span class="petal"></span>
+                    <span class="petal"></span><span class="petal"></span><span class="petal"></span>
+                </div>
+                <div class="center"></div>
+            </div>
+        </div>
+
+        <!-- CORAZONES FLOTANTES -->
+        <div class="hearts-container">
+            <span class="heart">♥</span>
+            <span class="heart">♡</span>
+            <span class="heart">♥</span>
+            <span class="heart">♡</span>
+            <span class="heart">♥</span>
+            <span class="heart">♡</span>
+        </div>
+
+    </section>
+
+</div>
+
+<script>
+const openButton = document.getElementById("openButton");
+const intro = document.getElementById("intro");
+const garden = document.getElementById("garden");
+const bgMusic = document.getElementById("bgMusic");
+
+openButton.addEventListener("click", function () {
+    bgMusic.play().catch(function(error) {
+        console.log("Error al reproducir audio:", error);
+    });
+
+    intro.classList.add("hidden");
+
+    setTimeout(function () {
+        garden.classList.add("show");
+    }, 450);
+});
+</script>
+
+</body>
+</html>
